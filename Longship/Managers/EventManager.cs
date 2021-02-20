@@ -4,7 +4,7 @@ using Longship.Events;
 
 namespace Longship.Managers
 {
-    public class EventManager
+    public class EventManager : Manager
     {
         public delegate void EventListener<in T>(T e) where T : Event;
         private readonly Dictionary<Type, List<EventListener<Event>>> _eventListeners;

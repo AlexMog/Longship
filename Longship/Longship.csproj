@@ -57,6 +57,8 @@
     <ItemGroup>
         <Compile Include="Configuration\ServerConfiguration.cs" />
         <Compile Include="Entrypoint.cs" />
+        <Compile Include="Events\CharacterEvent.cs" />
+        <Compile Include="Events\CharacterMoveEvent.cs" />
         <Compile Include="Events\Event.cs" />
         <Compile Include="Events\PlayerChatEvent.cs" />
         <Compile Include="Events\PlayerEvent.cs" />

@@ -35,22 +35,20 @@ namespace Longship.Managers
 
         public bool DisablePlugin<T>() where T : IPlugin
         {
-            if (_plugins.TryGetValue(typeof(T), out var value))
+            if (!_plugins.TryGetValue(typeof(T), out var value)) return false;
+            Longship.Log($"Disabling {value.Name}...");
+            try
             {
-                Longship.Log($"Disabling {value.Name}...");
-                try
-                {
-                    Longship.Instance.ClearEventListeners(value.Plugin);
-                    Longship.Instance.CommandsManager.ClearListeners(value.Plugin);
-                    value.Plugin.OnDisable();
-                }
-                catch (Exception e)
-                {
-                    Longship.LogError($"Error while disabling plugin {value.Name}");
-                    Longship.LogException(e);
-                }
-                Longship.Log($"{value.Name} disabled.");
+                Longship.Instance.EventManager.ClearListeners(value.Plugin);
+                Longship.Instance.CommandsManager.ClearListeners(value.Plugin);
+                value.Plugin.OnDisable();
             }
+            catch (Exception e)
+            {
+                Longship.LogError($"Error while disabling plugin {value.Name}");
+                Longship.LogException(e);
+            }
+            Longship.Log($"{value.Name} disabled.");
 
             return false;
         }

@@ -14,14 +14,14 @@ namespace Longship
         public PluginManager PluginManager { get; }
         public ConfigurationManager ConfigurationManager { get; }
         public CommandsManager CommandsManager { get; }
-        private readonly EventManager _eventManager;
+        public EventManager EventManager { get; }
         
         public Longship(string configPath, string pluginsPath)
         {
             Instance = this;
             PluginManager = new PluginManager(pluginsPath);
             ConfigurationManager = new ConfigurationManager(configPath);
-            _eventManager = new EventManager();
+            EventManager = new EventManager();
             CommandsManager = new CommandsManager();
         }
 
@@ -41,16 +41,6 @@ namespace Longship
             Log($"Ready.");
         }
 
-        public void RegisterEventListener<T>(IPlugin plugin, EventManager.EventListener<T> listener) where T : Event
-        {
-            _eventManager.RegisterListener(plugin, listener);
-        }
-
-        public void ClearEventListeners(IPlugin plugin)
-        {
-            _eventManager.ClearListeners(plugin);
-        }
-        
         public static void Log(string message)
         {
             System.Console.WriteLine($"[Longship][INFO] {message}");

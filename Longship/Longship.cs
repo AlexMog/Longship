@@ -11,6 +11,7 @@ namespace Longship
     {
         public const string BuildTag = "0.0.1";
         public static Longship Instance { get; private set; }
+        private static bool _debug = false;
         public PluginManager PluginManager { get; }
         public ConfigurationManager ConfigurationManager { get; }
         public CommandsManager CommandsManager { get; }
@@ -39,6 +40,14 @@ namespace Longship
             Log($"Loading plugins...");
             PluginManager.Init();
             Log($"Ready.");
+        }
+
+        public static void LogDebug(string message)
+        {
+            if (_debug)
+            {
+                System.Console.WriteLine($"[Longship][DEBUG] {message}");
+            }
         }
 
         public static void Log(string message)

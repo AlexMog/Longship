@@ -15,6 +15,27 @@ Longship aims to provide a simply-to-configure, optimizations, bugfixes and plug
 * **IF YOU ARE ON WINDOWS** run the server using `start_headless_server.bat`
 * Have fun !
 
+# Configuration
+Configuration files are generated when you launch Longship for the first time.  
+They should be located in the `VALHEIM_SERVER/Longship/Configs` directory.
+
+`Server.yml`
+```yaml
+# The name of your server - THIS IS CURRENTLY NOT USED
+serverName: Default Server
+# The max players you want to allow on the server - THIS IS CURRENTLY NOT USED
+maxPlayers: 10
+network:
+  # Upload bandwith allowed for the server, it is an easy fix for common lag problems, if you are lagging, you can augment this value.
+  # WARNING: This value WILL allow the server to use more bandwith. So be careful.
+  # Info: The value is in bytes (in this configuration, that means that the server is limited to ~250 Ko/s)
+  dataPerSeconds: 245760
+```
+
+# Plugins
+Plugins can be added and loaded to Longship.  
+Please refer to the [Wiki](https://github.com/AlexMog/Longship/wiki) for guides regarding Plugin installation or development.
+
 # How to build
 You must use VisualStudio or any other IDE compatible with .net framework 4.0 to build this project. **Do not use other versions than 4.0**  
 

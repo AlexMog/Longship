@@ -58,6 +58,7 @@
         <Compile Include="Configuration\ServerConfiguration.cs" />
         <Compile Include="Entrypoint.cs" />
         <Compile Include="Events\CharacterDamagedEvent.cs" />
+        <Compile Include="Events\CharacterDeathEvent.cs" />
         <Compile Include="Events\CharacterEvent.cs" />
         <Compile Include="Events\CharacterHealEvent.cs" />
         <Compile Include="Events\CharacterMoveEvent.cs" />
@@ -66,6 +67,7 @@
         <Compile Include="Events\PlayerEvent.cs" />
         <Compile Include="Managers\CommandsManager.cs" />
         <Compile Include="Managers\Manager.cs" />
+        <Compile Include="Patches\PatchListenToCharacterDeath.cs" />
         <Compile Include="Patches\PatchListenToCharacterDamaged.cs" />
         <Compile Include="Patches\PatchListenToCharacterHeal.cs" />
         <Compile Include="Patches\PatchListenToCharacterMovements.cs" />

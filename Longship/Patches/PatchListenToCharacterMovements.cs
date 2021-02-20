@@ -1,20 +1,31 @@
 ﻿using HarmonyLib;
 using Longship.Events;
+using UnityEngine;
 
 namespace Longship.Patches
 {
     [HarmonyPatch(typeof(Character), "UpdateMotion")]
     public class PatchListenToCharacterMovements
     {
-        static void Prefix(Character __instance, out CharacterMoveEvent __state)
+        // Using a position cache to avoid over-using the Garbage collector by instancing too much vectors
+        private static Vector3 _positionCache = new Vector3();
+
+        static void Prefix(Character __instance)
         {
-            __state = new CharacterMoveEvent(__instance, __instance.transform.position);
+            var tmp = __instance.transform.position;
+            _positionCache.Set(tmp.x, tmp.y, tmp.z);
         }
 
-        static void Postfix(Character __instance, CharacterMoveEvent __state)
+        static void Postfix(Character __instance)
         {
-            __state.NewPos = __instance.transform.position;
-            Longship.Instance.EventManager.DispatchEvent(__state);
+            if (_positionCache.Equals(__instance.transform.position))
+            {
+                return;
+            }
+
+            // Only fire the event if the position is different
+            Longship.Instance.EventManager.DispatchEvent(
+                new CharacterMoveEvent(__instance, _positionCache, __instance.transform.position));
         }
     }
 }

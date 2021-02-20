@@ -21,9 +21,12 @@ They should be located in the `VALHEIM_SERVER/Longship/Configs` directory.
 
 `Server.yml`
 ```yaml
-# The name of your server - THIS IS CURRENTLY NOT USED
+# Name of the server
 serverName: Default Server
+# Max players that can connect to the server
 maxPlayers: 10
+# Server password. Note: leave empty if you don't want any password
+serverPassword: ""
 network:
   # Upload bandwith allowed for the server, it is an easy fix for common lag problems, if you are lagging, you can augment this value.
   # WARNING: This value WILL allow the server to use more bandwith. So be careful.

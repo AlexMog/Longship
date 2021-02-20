@@ -55,6 +55,26 @@ namespace Longship.Managers
             return false;
         }
 
+        public void RegisterAndEnablePlugin(string name, IPlugin plugin)
+        {
+            _plugins[plugin.GetType()] = new LoadedPlugin()
+            {
+                Plugin = plugin,
+                Name = name
+            };
+            plugin.OnEnable();
+        }
+
+        public void RegisterAndEnablePlugin<T>(string name) where T : IPlugin
+        {
+            RegisterAndEnablePlugin(name, typeof(T).InvokeMember(
+                null,
+                BindingFlags.CreateInstance,
+                null,
+                null,
+                null) as IPlugin);
+        }
+
         private void _enablePlugins()
         {
             foreach (var entry in _plugins)

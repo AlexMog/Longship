@@ -62,6 +62,7 @@
         <Compile Include="Events\PlayerEvent.cs" />
         <Compile Include="Managers\CommandsManager.cs" />
         <Compile Include="Managers\Manager.cs" />
+        <Compile Include="Patches\PatchListenToCharacterMovements.cs" />
         <Compile Include="Patches\PatchListenToChatMessages.cs" />
         <Compile Include="Patches\PatchServerInfo.cs" />
         <Compile Include="Patches\PatchZDOManDataPerSeconds.cs" />

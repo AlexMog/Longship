@@ -36,6 +36,9 @@
           <HintPath>..\packages\Lib.Harmony.2.0.4\lib\net35\0Harmony.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="assembly_steamworks, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\lib\assembly_steamworks.dll</HintPath>
+        </Reference>
         <Reference Include="assembly_valheim, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\lib\assembly_valheim.dll</HintPath>
         </Reference>
@@ -63,6 +66,7 @@
         <Compile Include="Managers\CommandsManager.cs" />
         <Compile Include="Managers\Manager.cs" />
         <Compile Include="Patches\PatchListenToChatMessages.cs" />
+        <Compile Include="Patches\PatchPlayerCountLimit.cs" />
         <Compile Include="Patches\PatchZDOManDataPerSeconds.cs" />
         <Compile Include="Longship.cs" />
         <Compile Include="Managers\ConfigurationManager.cs" />

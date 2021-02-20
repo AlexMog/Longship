@@ -15,7 +15,7 @@ namespace Longship.Managers
             _configurationDirectory = configurationDirectory;
         }
         
-        public void Init()
+        public override void Init()
         {
             var directory = new DirectoryInfo(_configurationDirectory);
             if (!directory.Exists)

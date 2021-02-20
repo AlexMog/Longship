@@ -1,6 +1,7 @@
 ﻿using System;
 using Longship.Events;
 using Longship.Managers;
+using Longship.Plugins;
 using Longship.Utils;
 //using UnityEngine;
 
@@ -40,9 +41,14 @@ namespace Longship
             Log($"Ready.");
         }
 
-        public void RegisterEventListener<T>(EventManager.EventListener<T> listener) where T : Event
+        public void RegisterEventListener<T>(IPlugin plugin, EventManager.EventListener<T> listener) where T : Event
         {
-            _eventManager.RegisterListener(listener);
+            _eventManager.RegisterListener(plugin, listener);
+        }
+
+        public void ClearEventListeners(IPlugin plugin)
+        {
+            _eventManager.ClearListeners(plugin);
         }
         
         public static void Log(string message)

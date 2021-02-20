@@ -58,12 +58,14 @@
         <Compile Include="Configuration\ServerConfiguration.cs" />
         <Compile Include="Entrypoint.cs" />
         <Compile Include="Events\CharacterEvent.cs" />
+        <Compile Include="Events\CharacterHealEvent.cs" />
         <Compile Include="Events\CharacterMoveEvent.cs" />
         <Compile Include="Events\Event.cs" />
         <Compile Include="Events\PlayerChatEvent.cs" />
         <Compile Include="Events\PlayerEvent.cs" />
         <Compile Include="Managers\CommandsManager.cs" />
         <Compile Include="Managers\Manager.cs" />
+        <Compile Include="Patches\PatchListenToCharacterHeal.cs" />
         <Compile Include="Patches\PatchListenToCharacterMovements.cs" />
         <Compile Include="Patches\PatchListenToChatMessages.cs" />
         <Compile Include="Patches\PatchServerInfo.cs" />

@@ -23,7 +23,6 @@ They should be located in the `VALHEIM_SERVER/Longship/Configs` directory.
 ```yaml
 # The name of your server - THIS IS CURRENTLY NOT USED
 serverName: Default Server
-# The max players you want to allow on the server - THIS IS CURRENTLY NOT USED
 maxPlayers: 10
 network:
   # Upload bandwith allowed for the server, it is an easy fix for common lag problems, if you are lagging, you can augment this value.

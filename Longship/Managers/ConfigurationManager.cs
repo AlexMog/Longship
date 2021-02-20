@@ -5,7 +5,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Longship.Managers
 {
-    public class ConfigurationManager
+    public class ConfigurationManager : Manager
     {
         private readonly string _configurationDirectory;
         public ServerConfiguration Configuration { get; private set; }

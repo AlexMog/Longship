@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Longship.Managers
 {
-    public class PluginManager
+    public class PluginManager : Manager
     {
         private readonly string _pluginsPath;
         private readonly Dictionary<Type, LoadedPlugin> _plugins = new Dictionary<Type, LoadedPlugin>();

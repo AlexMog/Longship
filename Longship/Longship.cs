@@ -12,6 +12,7 @@ namespace Longship
         public static Longship Instance { get; private set; }
         public PluginManager PluginManager { get; }
         public ConfigurationManager ConfigurationManager { get; }
+        public CommandsManager CommandsManager { get; }
         private readonly EventManager _eventManager;
         
         public Longship(string configPath, string pluginsPath)
@@ -20,6 +21,7 @@ namespace Longship
             PluginManager = new PluginManager(pluginsPath);
             ConfigurationManager = new ConfigurationManager(configPath);
             _eventManager = new EventManager();
+            CommandsManager = new CommandsManager();
         }
 
         public void Init()

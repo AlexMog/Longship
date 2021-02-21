@@ -36,7 +36,7 @@ namespace Longship.Managers
         public bool DisablePlugin<T>() where T : IPlugin
         {
             if (!_plugins.TryGetValue(typeof(T), out var value)) return false;
-            Longship.Log($"Disabling {value.Name}...");
+            Longship.Instance.Log.LogInfo($"Disabling {value.Name}...");
             try
             {
                 Longship.Instance.EventManager.ClearListeners(value.Plugin);
@@ -45,10 +45,10 @@ namespace Longship.Managers
             }
             catch (Exception e)
             {
-                Longship.LogError($"Error while disabling plugin {value.Name}");
-                Longship.LogException(e);
+                Longship.Instance.Log.LogError($"Error while disabling plugin {value.Name}");
+                Longship.Instance.Log.LogError(e);
             }
-            Longship.Log($"{value.Name} disabled.");
+            Longship.Instance.Log.LogInfo($"{value.Name} disabled.");
 
             return false;
         }
@@ -77,7 +77,7 @@ namespace Longship.Managers
         {
             foreach (var entry in _plugins)
             {
-                Longship.Log($"Enabling plugin {entry.Value.Name}...");
+                Longship.Instance.Log.LogInfo($"Enabling plugin {entry.Value.Name}...");
                 try
                 {
                     entry.Value.Plugin.OnEnable();
@@ -105,7 +105,7 @@ namespace Longship.Managers
                 foreach (var type in assembly.GetTypes())
                 {
                     if (!type.IsSubclassOf(typeof(IPlugin)) || type.IsAbstract) continue;
-                    Longship.Log($"Loading plugin {file.Name}...");
+                    Longship.Instance.Log.LogInfo($"Loading plugin {file.Name}...");
                     try
                     {
                         _plugins[type] = new LoadedPlugin()
@@ -121,8 +121,8 @@ namespace Longship.Managers
                     }
                     catch (Exception e)
                     {
-                        Longship.LogError($"Can't load plugin {file.Name}.");
-                        Longship.LogException(e);
+                        Longship.Instance.Log.LogError($"Can't load plugin {file.Name}.");
+                        Longship.Instance.Log.LogError(e);
                     }
                 }
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using HarmonyLib;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ namespace Longship.Patches
     [HarmonyPatch]
     public class PatchListenToChatMessages
     {
-        private static Regex CommandRegex;
+        private static readonly Regex CommandRegex;
 
         static PatchListenToChatMessages()
         {
@@ -20,12 +19,10 @@ namespace Longship.Patches
         static void PatchOnNewChatMessage(long sender, Vector3 position, int type, string name, string text)
         {
             var match = CommandRegex.Match(text);
-            if (match.Success)
-            {
-                var command = match.Groups["command"].Value;
-                var argument = match.Groups["argument"].Success ? match.Groups["argument"].Value : null;
-                Longship.Instance.CommandsManager.OnCommandExecuted(command, argument);
-            }
+            if (!match.Success) return;
+            var command = match.Groups["command"].Value;
+            var argument = match.Groups["argument"].Success ? match.Groups["argument"].Value : null;
+            Longship.Instance.CommandsManager.OnCommandExecuted(command, argument);
         }
     }
 }

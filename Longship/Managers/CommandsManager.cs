@@ -6,7 +6,7 @@ namespace Longship.Managers
 {
     public class CommandsManager : Manager
     {
-        public delegate bool CommandListener(string command, string argument);
+        public delegate bool CommandListener(Character sender, string command, string argument);
         private readonly Dictionary<string, CommandListener> _commands = new Dictionary<string, CommandListener>();
         private readonly Dictionary<IPlugin, List<RegisteredListener>> _pluginListeners =
             new Dictionary<IPlugin, List<RegisteredListener>>();
@@ -38,7 +38,7 @@ namespace Longship.Managers
         {
             if (_commands.TryGetValue(command, out var listener))
             {
-                listener.Invoke(command, argument);
+                listener.Invoke(null /* TODO */, command, argument);
             }
             else
             {

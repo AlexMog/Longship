@@ -1,42 +1,41 @@
+### WARNING: LONGSHIP IS NOW A BEPINEX PLUGIN !
+
 # Longship
-Longship aims to provide a simply-to-configure, optimizations, bugfixes and plugins system for Valheim servers !
+Longship aims to provide a simply-to-configure, optimizations, bugfixes and a high-level API for Valheim servers !
+The primary goal is to provide easy ways for developers to develop effective plugins and provide more configuration options and fixes to server admins.
 
 # Features
-**Currently these features are in dev-phase, please do not use them if they are not marked as *TESTED***  
-* Fixed server-lag by upgrading the server bandwith limit through configuration - *TESTED*
+* Fixed server-lag by upgrading the server bandwith limit through configuration
+* Update your server configuration using configuration files
 * Simple yet powerful plugins system
+* Develop powerful plugins using a simple yet effective EventSystem
 * Events that plugins developers can listen on to provide more gameplay mechanics
 * The possibility to alter complete gameplay parts either through the Events system or directly by overriding game methods using HarmonyLib
 
 # How to install
+## Simple installation
+TODO
+
+## Manual installation
+* MAKE SHURE YOU HAVE ALREADY INSTALLED [BEPINEX](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/).
 * Go to the [releases page](https://github.com/AlexMog/Longship/releases) and download the last stable, production version.
-* Unzip the downloaded folder directly in your Valheim server directory, `valheim_server.exe` and `Longship.dll` should be in the same directory.
-* **IF YOU ARE ON LINUX OR MAC** run the server using `run_longship.sh`
-* **IF YOU ARE ON WINDOWS** run the server using `start_headless_server.bat`
-* Have fun !
+* Unzip the downloaded folder in your `VALHEIM_SERVER/BepInEx/plugins` directory.
+* Launch the server.
+* Enjoy !
 
 # Configuration
 Configuration files are generated when you launch Longship for the first time.  
-They should be located in the `VALHEIM_SERVER/Longship/Configs` directory.
+They should be located in the `VALHEIM_SERVER/BepInEx/config` directory.
 
-`Server.yml`
-```yaml
-# Name of the server
-serverName: Default Server
-# Max players that can connect to the server
-maxPlayers: 10
-# Server password. Note: leave empty if you don't want any password
-serverPassword: ""
-network:
-  # Upload bandwith allowed for the server, it is an easy fix for common lag problems, if you are lagging, you can augment this value.
-  # WARNING: This value WILL allow the server to use more bandwith. So be careful.
-  # Info: The value is in bytes (in this configuration, that means that the server is limited to ~250 Ko/s)
-  dataPerSeconds: 245760
-```
+`gg.mog.valheim.longship.cfg` contains all the configurations and documentation about them.
 
 # Plugins
 Plugins can be added and loaded to Longship.  
 Please refer to the [Wiki](https://github.com/AlexMog/Longship/wiki) for guides regarding Plugin installation or development.
+
+# High-level API
+Even if you are not using the Plugins system, you can still use the High-Level API (Events system, helpers, etc) provided by Longship.
+Please refer to the [Wiki](https://github.com/AlexMog/Longship/wiki) for documentation.
 
 # How to build
 You must use VisualStudio or any other IDE compatible with .net framework 4.0 to build this project. **Do not use other versions than 4.0**  
@@ -65,3 +64,6 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 # Contact
 AlexMog
 * Twitter: @AlexMog_FR
+
+# Special thanks
+* [Hi-ImKyle](https://github.com/Hi-ImKyle) for his port to BepInEx

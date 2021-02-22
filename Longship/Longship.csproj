@@ -91,6 +91,8 @@
         <Compile Include="Events\CharacterMoveEvent.cs" />
         <Compile Include="Events\CharacterSpawnEvent.cs" />
         <Compile Include="Events\Event.cs" />
+        <Compile Include="Events\HumanoidEvent.cs" />
+        <Compile Include="Events\HumanoidPickupItemEvent.cs" />
         <Compile Include="Events\PlayerChatEvent.cs" />
         <Compile Include="Events\PlayerEvent.cs" />
         <Compile Include="Managers\CommandsManager.cs" />
@@ -101,6 +103,7 @@
         <Compile Include="Patches\PatchListenToCharacterMovements.cs" />
         <Compile Include="Patches\PatchListenToCharacterSpawn.cs" />
         <Compile Include="Patches\PatchListenToChatMessages.cs" />
+        <Compile Include="Patches\PatchListenToHumanoidPickupItem.cs" />
         <Compile Include="Patches\PatchServerInfo.cs" />
         <Compile Include="Patches\PatchZDOManDataPerSeconds.cs" />
         <Compile Include="Longship.cs" />

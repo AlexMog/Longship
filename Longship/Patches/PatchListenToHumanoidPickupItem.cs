@@ -9,25 +9,30 @@ namespace Longship.Patches
     {
         // This is an exact copy of the ingame method "Pickup" to provide a reliable way of controlling it later
         static bool Prefix(GameObject go, Humanoid __instance, Inventory ___m_inventory, ZNetView ___m_nview,
-            ItemDrop.ItemData ___m_rightItem, ItemDrop.ItemData ___m_hiddenRightItem, EffectList ___m_pickupEffects)
+            ItemDrop.ItemData ___m_rightItem, ItemDrop.ItemData ___m_hiddenRightItem, EffectList ___m_pickupEffects,
+            ref bool __result)
         {
             var component = go.GetComponent<ItemDrop>();
             if (component == null)
             {
+                __result = false;
                 return false;
             }
             if (!component.CanPickup())
             {
+                __result = false;
                 return false;
             }
             if (___m_inventory.ContainsItem(component.m_itemData))
             {
+                __result = false;
                 return false;
             }
             if (component.m_itemData.m_shared.m_questItem &&
                 __instance.HaveUniqueKey(component.m_itemData.m_shared.m_name))
             {
                 __instance.Message(MessageHud.MessageType.Center, "$msg_cantpickup");
+                __result = false;
                 return false;
             }
             
@@ -35,11 +40,13 @@ namespace Longship.Patches
             if (___m_nview.GetZDO() == null)
             {
                 UnityEngine.Object.Destroy(go);
+                __result = true;
                 return true;
             }
             if (!flag)
             {
                 __instance.Message(MessageHud.MessageType.Center, "$msg_noroom");
+                __result = false;
                 return false;
             }
             Longship.Instance.EventManager.DispatchEvent(new HumanoidPickupItemEvent(__instance,
@@ -59,7 +66,8 @@ namespace Longship.Patches
             {
                 __instance.ShowPickupMessage(component.m_itemData, component.m_itemData.m_stack);
             }
-            return flag;
+            __result = flag;
+            return false;
         }
     }
 }

@@ -99,6 +99,7 @@
         <Compile Include="Events\HumanoidEvent.cs" />
         <Compile Include="Events\HumanoidPickupItemEvent.cs" />
         <Compile Include="Events\HumanoidUnequipItemEvent.cs" />
+        <Compile Include="Events\HumanoidUseItemEvent.cs" />
         <Compile Include="Events\PlayerChatEvent.cs" />
         <Compile Include="Events\PlayerEvent.cs" />
         <Compile Include="Managers\CommandsManager.cs" />
@@ -113,6 +114,7 @@
         <Compile Include="Patches\PatchListenToHumanoidEquipItem.cs" />
         <Compile Include="Patches\PatchListenToHumanoidPickupItem.cs" />
         <Compile Include="Patches\PatchListenToHumanoidUnequipItem.cs" />
+        <Compile Include="Patches\PatchListenToHumanoidUseItem.cs" />
         <Compile Include="Patches\PatchServerInfo.cs" />
         <Compile Include="Patches\PatchZDOManDataPerSeconds.cs" />
         <Compile Include="Longship.cs" />

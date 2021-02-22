@@ -8,7 +8,7 @@ namespace Longship.Patches
     [HarmonyPatch(typeof(Humanoid), "DropItem")]
     public class PatchListenToHumanoidDropItem
     {
-        private static MethodInfo _setupVisEquipment = typeof(Humanoid).GetMethod("SetupVisEquipment",
+        private static readonly MethodInfo _setupVisEquipment = typeof(Humanoid).GetMethod("SetupVisEquipment",
             BindingFlags.NonPublic | BindingFlags.Instance);
         
         // This is an exact copy of the ingame method "DropItem" to provide a reliable way of controlling it later

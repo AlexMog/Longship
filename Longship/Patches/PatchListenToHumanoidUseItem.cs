@@ -40,6 +40,10 @@ namespace Longship.Patches
                     ___m_consumeItemEffects.Create(Player.m_localPlayer.transform.position, Quaternion.identity);
                     ___m_zanim.SetTrigger("eat");
                 }
+                else
+                {
+                    return false;
+                }
             }
             else if ((inventory != ___m_inventory ||
                       !(bool) _toggleEquiped.Invoke(__instance, new []{ item })) && !fromInventoryGui)

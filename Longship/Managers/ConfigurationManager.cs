@@ -37,6 +37,8 @@ namespace Longship.Managers
                         "WARNING: This value WILL allow the server to use more bandwith. So be careful.\n" +
                         "Info: The value is in bytes (in this configuration, that means that the server is limited " +
                         "to ~250 Ko/s)");
+            Configuration.WorldName = _pluginConfigFile.Bind("Server", "WorldName", "Dedicated",
+                "Name of the world to use");
         }
     }
 }

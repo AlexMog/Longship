@@ -51,15 +51,16 @@ namespace Longship.Patches
             }
           }
           World createWorld = World.GetCreateWorld(name);
-          if (!(bool) _isPublicPasswordValid.Invoke(__instance,
+          var password = Longship.Instance.ConfigurationManager.Configuration.ServerPassword.Value;
+          if (!string.IsNullOrEmpty(password) && !(bool) _isPublicPasswordValid.Invoke(__instance,
             new object[]
             {
-              Longship.Instance.ConfigurationManager.Configuration.ServerPassword.Value, createWorld
+              password, createWorld
             }))
           {
             ZLog.LogError((object) ("Error bad password:" + _getPublicPasswordError.Invoke(__instance, new object[]
             {
-              Longship.Instance.ConfigurationManager.Configuration.ServerPassword.Value, createWorld
+              password, createWorld
             })));
             UnityEngine.Application.Quit();
             __result = false;
@@ -68,7 +69,7 @@ namespace Longship.Patches
 
           ZNet.SetServer(true, true, true, 
             Longship.Instance.ConfigurationManager.Configuration.ServerName.Value,
-            Longship.Instance.ConfigurationManager.Configuration.ServerPassword.Value,
+            password,
             createWorld);
           ZNet.SetServerHost("", 0);
           SteamManager.SetServerPort(port);

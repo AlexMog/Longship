@@ -118,6 +118,7 @@
         <Compile Include="Patches\PatchListenToHumanoidPickupItem.cs" />
         <Compile Include="Patches\PatchListenToHumanoidUnequipItem.cs" />
         <Compile Include="Patches\PatchListenToHumanoidUseItem.cs" />
+        <Compile Include="Patches\PatchListenToRpc.cs" />
         <Compile Include="Patches\PatchServerInfo.cs" />
         <Compile Include="Patches\PatchZDOManDataPerSeconds.cs" />
         <Compile Include="Longship.cs" />

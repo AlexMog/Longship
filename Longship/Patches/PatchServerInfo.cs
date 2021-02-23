@@ -14,9 +14,8 @@ namespace Longship.Patches
       
       [HarmonyPrefix]
       [HarmonyPatch(typeof(ZNet), "Awake")]
-      static void PatchZNetAwake(ref int ___m_serverPlayerLimit, ref int ___m_hostPort)
+      static void PatchZNetAwake(ref int ___m_serverPlayerLimit)
       {
-          ___m_hostPort = Longship.Instance.ConfigurationManager.Configuration.ServerPort.Value;
           ___m_serverPlayerLimit = (int) Longship.Instance.ConfigurationManager.Configuration.MaxPlayers.Value;
       }
 
@@ -25,32 +24,17 @@ namespace Longship.Patches
       static bool PatchFejdStartupParseServerArguments(FejdStartup __instance, ref bool __result)
       {
           string[] commandLineArgs = Environment.GetCommandLineArgs();
-          string name = "Dedicated";
-          int port = 2456;
+          string name = Longship.Instance.ConfigurationManager.Configuration.WorldName.Value;
           for (int index = 0; index < commandLineArgs.Length; ++index)
           {
             string str1 = commandLineArgs[index];
-            if (str1 == "-world")
-            {
-              string str2 = commandLineArgs[index + 1];
-              if (str2 != "")
-                name = str2;
-              ++index;
-            }
-            else if (str1 == "-port")
-            {
-              string s = commandLineArgs[index + 1];
-              if (s != "")
-                port = int.Parse(s);
-              ++index;
-            }
-            else if (str1 == "-savedir")
+            if (str1 == "-savedir")
             {
               Utils.SetSaveDataPath(commandLineArgs[index + 1]);
               ++index;
             }
           }
-          World createWorld = World.GetCreateWorld(name);
+          var createWorld = World.GetCreateWorld(name);
           var password = Longship.Instance.ConfigurationManager.Configuration.ServerPassword.Value;
           if (!string.IsNullOrEmpty(password) && !(bool) _isPublicPasswordValid.Invoke(__instance,
             new object[]
@@ -72,7 +56,7 @@ namespace Longship.Patches
             password,
             createWorld);
           ZNet.SetServerHost("", 0);
-          SteamManager.SetServerPort(port);
+          SteamManager.SetServerPort(Longship.Instance.ConfigurationManager.Configuration.ServerPort.Value);
           __result = true;
           return false;
       }

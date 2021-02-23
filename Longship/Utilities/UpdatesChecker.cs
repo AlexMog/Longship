@@ -2,7 +2,8 @@
 using System.Net;
 using UnityEngine;
 
-namespace Longship.Utils
+// Changed to Utilities instead of Utils to avoid collision with the game Utils class
+namespace Longship.Utilities
 {
     public class UpdatesChecker
     {
@@ -11,6 +12,7 @@ namespace Longship.Utils
         public static bool CheckForUpdate(out string url)
         {
             var client = new WebClient();
+            client.Headers.Add("User-Agent: Longship Valheim Mod");
             try
             {
                 var lastRelease = JsonUtility.FromJson<LastRelease>(client.DownloadString(RELEASES_URL));

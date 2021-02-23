@@ -6,7 +6,7 @@ using HarmonyLib;
 using Longship.Events;
 using Longship.Managers;
 using Longship.Plugins;
-using Longship.Utils;
+using Longship.Utilities;
 
 namespace Longship
 {

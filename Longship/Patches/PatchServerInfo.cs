@@ -23,16 +23,14 @@ namespace Longship.Patches
       [HarmonyPatch(typeof(FejdStartup), "ParseServerArguments")]
       static bool PatchFejdStartupParseServerArguments(FejdStartup __instance, ref bool __result)
       {
-          string[] commandLineArgs = Environment.GetCommandLineArgs();
-          string name = Longship.Instance.ConfigurationManager.Configuration.WorldName.Value;
-          for (int index = 0; index < commandLineArgs.Length; ++index)
+          var commandLineArgs = Environment.GetCommandLineArgs();
+          var name = Longship.Instance.ConfigurationManager.Configuration.WorldName.Value;
+          for (var index = 0; index < commandLineArgs.Length; ++index)
           {
-            string str1 = commandLineArgs[index];
-            if (str1 == "-savedir")
-            {
-              Utils.SetSaveDataPath(commandLineArgs[index + 1]);
-              ++index;
-            }
+            var str1 = commandLineArgs[index];
+            if (str1 != "-savedir") continue;
+            Utils.SetSaveDataPath(commandLineArgs[index + 1]);
+            ++index;
           }
           var createWorld = World.GetCreateWorld(name);
           var password = Longship.Instance.ConfigurationManager.Configuration.ServerPassword.Value;

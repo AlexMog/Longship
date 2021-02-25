@@ -103,8 +103,13 @@
         <Compile Include="Events\HumanoidPickupItemEvent.cs" />
         <Compile Include="Events\HumanoidUnequipItemEvent.cs" />
         <Compile Include="Events\HumanoidUseItemEvent.cs" />
+        <Compile Include="Events\ICancellable.cs" />
+        <Compile Include="Events\IClearable.cs" />
         <Compile Include="Events\PlayerChatEvent.cs" />
         <Compile Include="Events\PlayerEvent.cs" />
+        <Compile Include="Events\RpcEvent.cs" />
+        <Compile Include="Events\RpcToExecuteEvent.cs" />
+        <Compile Include="Events\RpcToRouteEvent.cs" />
         <Compile Include="Managers\CommandsManager.cs" />
         <Compile Include="Managers\Manager.cs" />
         <Compile Include="Patches\PatchListenToCharacterDeath.cs" />

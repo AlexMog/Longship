@@ -39,6 +39,8 @@ namespace Longship.Managers
                         "to ~250 Ko/s)");
             Configuration.WorldName = _pluginConfigFile.Bind("Server", "WorldName", "Dedicated",
                 "Name of the world to use");
+            Configuration.ServerPublic = _pluginConfigFile.Bind("Server", "ServerPublic", true,
+                "Server visable in server list");
         }
     }
 }

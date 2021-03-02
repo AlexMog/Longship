@@ -10,10 +10,10 @@ using Longship.Utilities;
 
 namespace Longship
 {
-    [BepInPlugin("gg.mog.valheim.longship", "Longship", "0.1.6")]
+    [BepInPlugin("gg.mog.valheim.longship", "Longship", "0.1.8")]
     public class Longship : BaseUnityPlugin
     {
-        public const string BuildTag = "0.1.6";
+        public const string BuildTag = "0.1.8";
         public static Longship Instance { get; private set; }
         public PluginManager PluginManager { get; }
         public ConfigurationManager ConfigurationManager { get; }

@@ -10,5 +10,6 @@ namespace Longship.Configuration
         public ConfigEntry<uint> MaxPlayers { get; set; }
         public ConfigEntry<int> ServerPort { get; set; }
         public ConfigEntry<uint> NetworkDataPerSeconds { get; set; }
+        public ConfigEntry<bool> ServerPublic { get; set; }
     }
 }

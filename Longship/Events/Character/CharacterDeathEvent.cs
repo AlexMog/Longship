@@ -2,7 +2,7 @@
 {
     public class CharacterDeathEvent : CharacterEvent
     {
-        public CharacterDeathEvent(Character character) : base(character)
+        public CharacterDeathEvent(global::Character character) : base(character)
         {
         }
     }

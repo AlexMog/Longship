@@ -1,8 +1,8 @@
 ﻿namespace Longship.Plugins
 {
-    public abstract class IPlugin
+    public interface IPlugin
     {
-        public virtual void OnEnable() {}
-        public virtual void OnDisable() {}
+        void OnEnable();
+        void OnDisable();
     }
 }

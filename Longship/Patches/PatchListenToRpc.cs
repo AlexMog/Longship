@@ -13,6 +13,9 @@ namespace Longship.Patches
             .GetField("m_action");
         private static readonly MethodInfo _getPeer = typeof(ZRoutedRpc).GetMethod("GetPeer",
             BindingFlags.NonPublic | BindingFlags.Instance);
+        // Caches
+        private static readonly RpcToExecuteEvent _rpcToExecuteEvent = new RpcToExecuteEvent();
+        private static readonly RpcToRouteEvent _rpcToRouteEvent = new RpcToRouteEvent();
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(ZRoutedRpc), "HandleRoutedRPC")]
@@ -50,10 +53,11 @@ namespace Longship.Patches
             {
                 var parameters = ZNetView.Deserialize(rpc,
                     ((RoutedMethod<object, object, object, object>.Method) action).Method.GetParameters(), package);
-                // FIXME Use cached object or pool to avoid GBC usage
-                var evt = new RpcToExecuteEvent(_registeredRpc[rpcHash], parameters);
-                Longship.Instance.EventManager.DispatchEvent(evt);
-                if (evt.Cancelled)
+                _rpcToExecuteEvent.Cancelled = false;
+                _rpcToExecuteEvent.RpcName = _registeredRpc[rpcHash];
+                _rpcToExecuteEvent.Params = parameters;
+                Longship.Instance.EventManager.DispatchEvent(_rpcToExecuteEvent);
+                if (_rpcToExecuteEvent.Cancelled)
                 {
                     return;
                 }
@@ -62,10 +66,11 @@ namespace Longship.Patches
             else
             {
                 var parameters = ZNetView.Deserialize(rpc, ((Action) action).Method.GetParameters(), package);
-                // FIXME Use cached object or pool to avoid GBC usage
-                var evt = new RpcToExecuteEvent(_registeredRpc[rpcHash], parameters);
-                Longship.Instance.EventManager.DispatchEvent(evt);
-                if (evt.Cancelled)
+                _rpcToExecuteEvent.Cancelled = false;
+                _rpcToExecuteEvent.RpcName = _registeredRpc[rpcHash];
+                _rpcToExecuteEvent.Params = parameters;
+                Longship.Instance.EventManager.DispatchEvent(_rpcToExecuteEvent);
+                if (_rpcToExecuteEvent.Cancelled)
                 {
                     return;
                 }
@@ -88,9 +93,12 @@ namespace Longship.Patches
                 ZNetView.Deserialize(peer.m_uid,
                     ((Action) action).Method.GetParameters(), rpcData.m_parameters);
             // FIXME Use cached object or pool to avoid GBC usage
-            var evt = new RpcToRouteEvent(peer, _registeredRpc[rpcData.m_methodHash], parameters);
-            Longship.Instance.EventManager.DispatchEvent(evt);
-            if (evt.Cancelled)
+            _rpcToRouteEvent.Cancelled = false;
+            _rpcToRouteEvent.Target = peer;
+            _rpcToRouteEvent.RpcName = _registeredRpc[rpcData.m_methodHash];
+            _rpcToRouteEvent.Params = parameters;
+            Longship.Instance.EventManager.DispatchEvent(_rpcToRouteEvent);
+            if (_rpcToRouteEvent.Cancelled)
             {
                 return;
             }

@@ -14,8 +14,8 @@ namespace Longship.Patches
         private static readonly MethodInfo _getPeer = typeof(ZRoutedRpc).GetMethod("GetPeer",
             BindingFlags.NonPublic | BindingFlags.Instance);
         // Caches
-        private static readonly RpcToExecuteEvent _rpcToExecuteEvent = new RpcToExecuteEvent();
-        private static readonly RpcToRouteEvent _rpcToRouteEvent = new RpcToRouteEvent();
+        private static readonly RpcReceptionToExecuteEvent RpcReceptionToExecuteEvent = new RpcReceptionToExecuteEvent();
+        private static readonly RpcReceptionToRouteEvent RpcReceptionToRouteEvent = new RpcReceptionToRouteEvent();
         
         [HarmonyPrefix]
         [HarmonyPatch(typeof(ZRoutedRpc), "HandleRoutedRPC")]
@@ -53,11 +53,11 @@ namespace Longship.Patches
             {
                 var parameters = ZNetView.Deserialize(rpc,
                     ((RoutedMethod<object, object, object, object>.Method) action).Method.GetParameters(), package);
-                _rpcToExecuteEvent.Cancelled = false;
-                _rpcToExecuteEvent.RpcName = _registeredRpc[rpcHash];
-                _rpcToExecuteEvent.Params = parameters;
-                Longship.Instance.EventManager.DispatchEvent(_rpcToExecuteEvent);
-                if (_rpcToExecuteEvent.Cancelled)
+                RpcReceptionToExecuteEvent.Cancelled = false;
+                RpcReceptionToExecuteEvent.RpcName = _registeredRpc[rpcHash];
+                RpcReceptionToExecuteEvent.Params = parameters;
+                Longship.Instance.EventManager.DispatchEvent(RpcReceptionToExecuteEvent);
+                if (RpcReceptionToExecuteEvent.Cancelled)
                 {
                     return;
                 }
@@ -66,11 +66,11 @@ namespace Longship.Patches
             else
             {
                 var parameters = ZNetView.Deserialize(rpc, ((Action) action).Method.GetParameters(), package);
-                _rpcToExecuteEvent.Cancelled = false;
-                _rpcToExecuteEvent.RpcName = _registeredRpc[rpcHash];
-                _rpcToExecuteEvent.Params = parameters;
-                Longship.Instance.EventManager.DispatchEvent(_rpcToExecuteEvent);
-                if (_rpcToExecuteEvent.Cancelled)
+                RpcReceptionToExecuteEvent.Cancelled = false;
+                RpcReceptionToExecuteEvent.RpcName = _registeredRpc[rpcHash];
+                RpcReceptionToExecuteEvent.Params = parameters;
+                Longship.Instance.EventManager.DispatchEvent(RpcReceptionToExecuteEvent);
+                if (RpcReceptionToExecuteEvent.Cancelled)
                 {
                     return;
                 }
@@ -93,12 +93,12 @@ namespace Longship.Patches
                 ZNetView.Deserialize(peer.m_uid,
                     ((Action) action).Method.GetParameters(), rpcData.m_parameters);
             // FIXME Use cached object or pool to avoid GBC usage
-            _rpcToRouteEvent.Cancelled = false;
-            _rpcToRouteEvent.Target = peer;
-            _rpcToRouteEvent.RpcName = _registeredRpc[rpcData.m_methodHash];
-            _rpcToRouteEvent.Params = parameters;
-            Longship.Instance.EventManager.DispatchEvent(_rpcToRouteEvent);
-            if (_rpcToRouteEvent.Cancelled)
+            RpcReceptionToRouteEvent.Cancelled = false;
+            RpcReceptionToRouteEvent.Target = peer;
+            RpcReceptionToRouteEvent.RpcName = _registeredRpc[rpcData.m_methodHash];
+            RpcReceptionToRouteEvent.Params = parameters;
+            Longship.Instance.EventManager.DispatchEvent(RpcReceptionToRouteEvent);
+            if (RpcReceptionToRouteEvent.Cancelled)
             {
                 return;
             }
@@ -147,6 +147,20 @@ namespace Longship.Patches
             return false;
         }
         
+/*
+    Unrouted RPCs to handle later:
+ rpc.Register<Vector3, bool>("RefPos", new Action<ZRpc, Vector3, bool>(this.RPC_RefPos));
+        rpc.Register<ZPackage>("PlayerList", new Action<ZRpc, ZPackage>(this.RPC_PlayerList));
+        rpc.Register<string>("RemotePrint", new Action<ZRpc, string>(this.RPC_RemotePrint));
+        rpc.Register<ZDOID>("CharacterID", new Action<ZRpc, ZDOID>(this.RPC_CharacterID));
+        rpc.Register<string>("Kick", new Action<ZRpc, string>(this.RPC_Kick));
+        rpc.Register<string>("Ban", new Action<ZRpc, string>(this.RPC_Ban));
+        rpc.Register<string>("Unban", new Action<ZRpc, string>(this.RPC_Unban));
+        rpc.Register("Save", new ZRpc.RpcMethod.Method(this.RPC_Save));
+        rpc.Register("PrintBanned", new ZRpc.RpcMethod.Method(this.RPC_PrintBanned));
+            {"ServerHandshake".GetStableHashCode(), "ServerHandshake"},
+            {"PeerInfo".GetStableHashCode(), "PeerInfo"}, {"Disconnect".GetStableHashCode(), "Disconnect"},
+        zdoPeer.m_peer.m_rpc.Register<ZPackage>("ZDOData", new Action<ZRpc, ZPackage>(this.RPC_ZDOData));*/
         private static Dictionary<int, string> _registeredRpc = new Dictionary<int, string>() {
             {"SleepStart".GetStableHashCode(), "SleepStart"}, {"SleepStop".GetStableHashCode(), "SleepStop"},
             {"DiscoverLocationRespons".GetStableHashCode(), "DiscoverLocationRespons"},

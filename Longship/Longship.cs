@@ -51,6 +51,8 @@ namespace Longship
             }
             Logger.LogInfo($"Loading server configuration...");
             ConfigurationManager.Init();
+            Logger.LogInfo("Loading commands manager...");
+            CommandsManager.Init();
             Logger.LogInfo($"Loading plugins...");
             PluginManager.Init();
             Logger.LogInfo($"Ready.");

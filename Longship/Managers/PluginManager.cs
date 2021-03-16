@@ -30,7 +30,7 @@ namespace Longship.Managers
                 return (T) value.Plugin;
             }
 
-            return null;
+            throw new Exception("Plugin not found");
         }
 
         public bool DisablePlugin<T>() where T : IPlugin

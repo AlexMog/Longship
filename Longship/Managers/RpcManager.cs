@@ -9,27 +9,49 @@ namespace Longship.Managers
         public override void Init()
         {
             Longship.Instance.EventManager.RegisterListener(this,
-                (EventManager.EventListener<RpcToExecuteEvent>) RpcToExecuteListener);
+                (EventManager.EventListener<RpcReceptionToExecuteEvent>) RpcToExecuteListener);
             Longship.Instance.EventManager.RegisterListener(this,
-                (EventManager.EventListener<RpcToRouteEvent>) RpcToRouteListener);
+                (EventManager.EventListener<RpcReceptionToRouteEvent>) RpcToRouteListener);
         }
 
-        private void RpcToExecuteListener(RpcToExecuteEvent rpcToExecuteEvent) {}
-        
-        private void RpcToRouteListener(RpcToRouteEvent rpcToRouteEvent) {}
+        private void RpcToExecuteListener(RpcReceptionToExecuteEvent rpcReceptionToExecuteEvent)
+        {
+            HandleRpc(rpcReceptionToExecuteEvent);
+        }
+
+        private void RpcToRouteListener(RpcReceptionToRouteEvent rpcReceptionToRouteEvent)
+        {
+            HandleRpc(rpcReceptionToRouteEvent);
+        }
+
+        private void HandleRpc(RpcReceptionEvent rpcReceptionEvent)
+        {
+            if (_registeredRpc.TryGetValue(rpcReceptionEvent.RpcName, out var evt))
+            {
+                evt.PlayerId = (long) rpcReceptionEvent.Params[0];
+                evt.Construct(rpcReceptionEvent.Params);
+                Longship.Instance.EventManager.DispatchEvent(evt);
+                rpcReceptionEvent.Cancelled = evt.Cancelled;
+            }
+            else
+            {
+                Longship.Instance.Log.LogWarning($"[RpcManager] Rpc not registered: {rpcReceptionEvent.RpcName}");
+            }
+        }
 
         public void OnEnable() {}
         public void OnDisable() {}
         
-        private static Dictionary<int, string> _registeredRpc = new Dictionary<int, string>() {
-            {"SleepStart".GetStableHashCode(), "SleepStart"}, {"SleepStop".GetStableHashCode(), "SleepStop"},
-            {"DiscoverLocationRespons".GetStableHashCode(), "DiscoverLocationRespons"},
-            {"DestroyZDO".GetStableHashCode(), "DestroyZDO"}, {"RequestZDO".GetStableHashCode(), "RequestZDO"},
-            {"SetGlobalKey".GetStableHashCode(), "SetGlobalKey"}, {"GlobalKeys".GetStableHashCode(), "GlobalKeys"},
-            {"LocationIcons".GetStableHashCode(), "LocationIcons"}, {"ShowMessage".GetStableHashCode(), "ShowMessage"},
-            {"SpawnObject".GetStableHashCode(), "SpawnObject"}, {"SetEvent".GetStableHashCode(), "SetEvent"},
-            {"ChatMessage".GetStableHashCode(), "ChatMessage"},
-            {"DiscoverClosestLocation".GetStableHashCode(), "DiscoverClosestLocation"},
+        // Cached events
+        private static Dictionary<string, RpcEvent> _registeredRpc = new Dictionary<string, RpcEvent>() {
+            {"SleepStart", new SleepStartEvent()}, {"SleepStop", new SleepStopEvent()},
+            {"DiscoverLocationRespons", new DiscoverLocationResponseEvent()},
+            {"DestroyZDO", new DestroyZDOEvent()}, {"RequestZDO", new RequestZDOEvent()},
+            {"SetGlobalKey", new SetGlobalKeyEvent()}, {"GlobalKeys", new GlobalKeysEvent()},
+            {"LocationIcons", new LocationIconsEvent()}, {"ShowMessage", new ShowMessageEvent()},
+            {"SpawnObject", new SpawnObjectEvent()}, {"SetEvent", new SetEventEvent()},
+            {"ChatMessage", new ChatMessageEvent()},
+            {"DiscoverClosestLocation", new DiscoverClosestLocationEvent()},
         };
     }
 }

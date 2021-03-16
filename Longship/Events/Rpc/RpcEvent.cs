@@ -1,9 +1,10 @@
-﻿namespace Longship.Events
+﻿﻿namespace Longship.Events
 {
     public abstract class RpcEvent : Event, ICancellable
     {
         public bool Cancelled { get; set; } = false;
-        public string RpcName { get; set; }
-        public object[] Params { get; set; }
+        public long PlayerId { get; set; }
+
+        public virtual void Construct(object[] parameters) {}
     }
 }

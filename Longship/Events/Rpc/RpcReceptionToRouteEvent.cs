@@ -1,6 +1,6 @@
 ﻿namespace Longship.Events
 {
-    public class RpcToRouteEvent : RpcEvent
+    public class RpcReceptionToRouteEvent : RpcReceptionEvent
     {
         public ZNetPeer Target { get; set; }
     }

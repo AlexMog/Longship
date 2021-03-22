@@ -8,10 +8,8 @@ namespace Longship.Managers
     {
         public override void Init()
         {
-            Longship.Instance.EventManager.RegisterListener(this,
-                (EventManager.EventListener<RpcReceptionToExecuteEvent>) RpcToExecuteListener);
-            Longship.Instance.EventManager.RegisterListener(this,
-                (EventManager.EventListener<RpcReceptionToRouteEvent>) RpcToRouteListener);
+            Longship.Instance.EventManager.RegisterListener<RpcReceptionToExecuteEvent>(this, RpcToExecuteListener);
+            Longship.Instance.EventManager.RegisterListener<RpcReceptionToRouteEvent>(this, RpcToRouteListener);
         }
 
         private void RpcToExecuteListener(RpcReceptionToExecuteEvent rpcReceptionToExecuteEvent)
